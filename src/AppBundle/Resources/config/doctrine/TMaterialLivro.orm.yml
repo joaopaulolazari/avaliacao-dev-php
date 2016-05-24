@@ -1,0 +1,30 @@
+AppBundle\Entity\TMaterialLivro:
+    type: entity
+    table: t_material_livro
+    id: {  }
+    repositoryClass: AppBundle\Entity\Repository\TMaterialLivroRepository
+    fields:
+        fsIsbn:
+            type: string
+            nullable: false
+            length: 45
+            options:
+                fixed: false
+                comment: 'Código ISBN'
+            column: fs_isbn
+        fnNumeroPagina:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                comment: 'Número de páginas do livro'
+            column: fn_numero_pagina
+        fsResumo:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+                comment: 'Resumo do livro'
+            column: fs_resumo
+    lifecycleCallbacks: {  }

@@ -1,0 +1,7 @@
+parameters:
+    site.app.rota.class: Site\AppBundle\Service\RotaService
+
+services:
+    site.app.rota:
+        class: %site.app.rota.class%
+        arguments: ["@router"]

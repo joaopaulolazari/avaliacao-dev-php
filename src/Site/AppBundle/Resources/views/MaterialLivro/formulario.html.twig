@@ -1,0 +1,53 @@
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.fsTitulo) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.fsSubtitulo) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+
+            <div class="upload-imagem">
+                <img ng-src="<% imagemSrc %>" width="146" height="145" ng-if="imagemSrc">
+                <div class="legenda">
+                    <input type="file" ng-file-select="onFileSelect($files)" ng-model="materialLivro" propriedade="fsCaminhoImagem" img-padrao="{{ asset('uploads/sem-foto.png') }}" url-upload="{{ path('api_app_upload') }}">
+
+                    <a href="javascript:void(0);" class="img-alterar">
+                        <i ng-class="{'fa fa-picture-o': statusEnvioImagem[0], 'fa fa-refresh fa-spin': statusEnvioImagem[1], 'fa fa-check': statusEnvioImagem[2], 'fa fa-times': statusEnvioImagem[3]}"></i> Alterar imagem
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.form-group -->
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.fsIsbn) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.fnNumeroPagina) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.form-group -->
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_row(form.fsResumo) }}
+        </div>
+    </div>
+</div><!-- /.form-group -->
+<div class="form-group">
+    <div class="row">
+        {{ form_row(form.autores) }}
+    </div>
+</div><!-- /.form-group -->

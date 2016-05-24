@@ -1,0 +1,29 @@
+{% extends "SiteAppBundle::base.html.twig" %}
+
+{% block body -%}
+<div class="conteudo-geral" ng-controller="MaterialController" ng-init="cadastrarDicionario()">
+    <form type="POST" name="materialDicionarioForm" valida-form url="{{ path('api_app_material_dicionario_cadastrar') }}" model="materialDicionario" redireciona="{{ path('site_material') }}" tab-enter="submit">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Cadastrar Dicionário</h3>
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-success pull-right">
+                    <i class="fa fa-floppy-o"></i> Salvar
+                </button>
+                <a href="{{ path('site_material') }}" class="btn btn-default pull-right">
+                    <i class="fa fa-reply"></i> Voltar
+                </a>
+            </div>
+        </div>
+        <div class="content">
+            {% include 'SiteAppBundle:MaterialDicionario:formulario.html.twig' -%}
+        </div><!-- /.content -->
+    </form>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <!-- Angular anomalia Script -->
+    <script src="{{ asset('js/site/angular/app/controller/material-controller.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,24 @@
+api_app_app:
+    resource: "APIAppBundle:App"
+    type:     rest
+    prefix:   /api
+
+api_app_autor:
+    resource: "APIAppBundle:Autor"
+    type:     rest
+    prefix:   /api/app/autor
+
+api_app_material_livro:
+    resource: "APIAppBundle:MaterialLivro"
+    type:     rest
+    prefix:   /api/app/material-livro
+
+api_app_material_dicionario:
+    resource: "APIAppBundle:MaterialDicionario"
+    type:     rest
+    prefix:   /api/app/material-dicionario
+
+api_app_material:
+    resource: "APIAppBundle:Material"
+    type:     rest
+    prefix:   /api/app/material

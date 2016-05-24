@@ -1,0 +1,18 @@
+AppBundle\Entity\TMaterial:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields:
+                - fsTitulo
+            message: "Título já cadastrado."
+    properties:
+        fsTitulo:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        fsSubtitulo:
+            - Length:
+                max: 255
+        autores:
+            - Count:
+                min: 1
+                minMessage: "O material tem que ter pelo menos 1 autor."

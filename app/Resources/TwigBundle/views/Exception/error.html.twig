@@ -1,0 +1,9 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h2>{{ status_code }}</h2>
+    <h1>Ocorreu um erro no sistema</h1>
+    <p>
+        <a href="{{ path('tms_app_home') }}">Voltar a página inicial</a>.
+    </p>
+{% endblock %}

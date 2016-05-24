@@ -1,0 +1,6 @@
+<script type="text/javascript">
+    window.rotas = {{ site_app_rota.getRotas(true)|raw }};
+    window.paramsRota = {{ app.request.attributes.get('_route_params')|json_encode|raw }};
+    window.asset = "{{ asset('')|raw }}";
+    window.ambiente = "{{ app.environment }}";
+</script>

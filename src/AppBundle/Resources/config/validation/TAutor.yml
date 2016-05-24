@@ -1,0 +1,21 @@
+AppBundle\Entity\TAutor:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields:
+                - fsNome
+            message: "Autor já cadastrado."
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields:
+                - fsNotacaoAutor
+            message: "Notação já cadastrada."
+    properties:
+        fsNome:
+            - NotBlank: ~
+            - Length:
+                min: 3
+                max: 255
+        fsNotacaoAutor:
+            - NotBlank: ~
+            - Length:
+                min: 3
+                max: 3

@@ -1,0 +1,5 @@
+api:
+    resource: "@APIAppBundle/Resources/config/routing.yml"
+
+site:
+    resource: "@SiteAppBundle/Resources/config/routing.yml"

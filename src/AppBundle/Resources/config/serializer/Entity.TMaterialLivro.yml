@@ -1,0 +1,25 @@
+AppBundle\Entity\TMaterialLivro:
+    properties:
+        fnMaterialId:
+            groups:
+                - form
+                - listagem
+                - detalhado
+        fsIsbn:
+            groups:
+                - form
+                - detalhado
+        fnNumeroPagina:
+            groups:
+                - form
+                - detalhado
+        fsResumo:
+            groups:
+                - form
+                - detalhado
+    virtual_properties:
+        getFsTipoMaterial:
+            serialized_name: fsTipoMaterial
+            groups:
+                - listagem
+            type: string

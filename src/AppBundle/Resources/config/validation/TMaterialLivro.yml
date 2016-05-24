@@ -1,0 +1,13 @@
+AppBundle\Entity\TMaterialLivro:
+    properties:
+        fsIsbn:
+            - NotBlank: ~
+            - Length:
+                max: 45
+        fnNumeroPagina:
+            - NotBlank: ~
+            - Type:
+                type: digit
+        fsResumo:
+            - Length:
+                max: 500

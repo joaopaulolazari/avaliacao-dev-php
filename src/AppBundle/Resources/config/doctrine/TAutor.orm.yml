@@ -1,0 +1,51 @@
+AppBundle\Entity\TAutor:
+    type: entity
+    table: t_autor
+    id:
+        fnAutorId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                comment: 'Id autoincrement'
+            id: true
+            column: fn_autor_id
+            generator:
+                strategy: IDENTITY
+    repositoryClass: AppBundle\Entity\Repository\TAutorRepository
+    fields:
+        fsNome:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                comment: 'Nome autor'
+            column: fs_nome
+        fsNotacaoAutor:
+            type: string
+            nullable: false
+            length: 3
+            options:
+                fixed: false
+                comment: 'Notação autor'
+            column: fs_notacao_autor
+        fdInclusao:
+            type: datetime
+            nullable: false
+            options:
+                comment: 'Data de inclusão de registro'
+            column: fd_inclusao
+            gedmo:
+               timestampable:
+                   on: create
+        fdAlteracao:
+            type: datetime
+            nullable: true
+            options:
+                comment: 'Data de alteração de registro'
+            column: fd_alteracao
+            gedmo:
+               timestampable:
+                   on: update
+    lifecycleCallbacks: {  }

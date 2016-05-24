@@ -1,0 +1,35 @@
+AppBundle\Entity\TMaterial:
+    properties:
+        fnMaterialId:
+            groups:
+                - form
+                - listagem
+                - detalhado
+        fsTitulo:
+            groups:
+                - form
+                - listagem
+                - detalhado
+        fsSubtitulo:
+            groups:
+                - form
+                - detalhado
+        fsTipoMaterial:
+            groups:
+                - form
+                - listagem
+                - detalhado
+        fsCaminhoImagem:
+            groups:
+                - form
+                - listagem
+                - detalhado
+        autores:
+            groups:
+                - detalhado
+    virtual_properties:
+        getAutoresId:
+            serialized_name: autores
+            groups:
+                - form
+            type: array

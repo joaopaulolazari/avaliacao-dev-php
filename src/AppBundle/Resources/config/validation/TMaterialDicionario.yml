@@ -1,0 +1,9 @@
+AppBundle\Entity\TMaterialDicionario:
+    properties:
+        fsEdicao:
+            - NotBlank: ~
+            - Length:
+                max: 45
+        fsClassificacao:
+            - Length:
+                max: 45

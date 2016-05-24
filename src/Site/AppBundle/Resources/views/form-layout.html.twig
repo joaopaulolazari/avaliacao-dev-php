@@ -1,0 +1,220 @@
+{% extends "bootstrap_3_layout.html.twig" %}
+
+{# Rows #}
+
+{% block form_row -%}
+    {# Pega o nome do formulário root #}
+    {%- set rootFormName = getRootFormName(form) -%}
+    {# Verifica se o ng-model está setado no FormType, se não aplica o nome do id como ng-model substituindo "_" por "." #}
+    {%- set ngModel = (attr is defined and attr['ng-model'] is defined) ? attr['ng-model'] : (id|replace({'_': '.'})) %}
+    <div class="form-group">
+        {{ form_label(form) }}
+        {{ form_widget(form, {ngModel: ngModel}) }}
+        {%- if attr['multiplo-checkbox'] is not defined %}
+            <formerro form="{{rootFormName}}Form['{{full_name}}']" class="erro-formulario-mensagem"></formerro>
+        {%- endif %}
+    </div>
+{%- endblock form_row %}
+
+{# bloco para renderizar o campo emissao_conhecimento_ie #}
+{% block emissao_conhecimento_ie_row -%}
+    {# Pega o nome do formulário root #}
+    {%- set rootFormName = getRootFormName(form) -%}
+    {# Verifica se o ng-model está setado no FormType, se não aplica o nome do id como ng-model substituindo "_" por "." #}
+    {%- set ngModel = (attr is defined and attr['ng-model'] is defined) ? attr['ng-model'] : (id|replace({'_': '.'})) %}
+    <div class="form-group" ng-class="{'erro-formulario' : ({{rootFormName}}Form['{{full_name}}'].$invalid && {{rootFormName}}Form.$submitted)}" >
+        <label {% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %} ng-class="{'required': {{id}} }">
+            <input type="checkbox" ng-model="{{id}}" ng-init="{{id}} = true" ng-change="{{ngModel}} = {{id}} ? {{ngModel}} : null;" /> {{label}}
+        </label>
+
+        {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
+        {%- set attr = attr|merge({'ng-model': ngModel|default('')}) -%}
+        {%- set ngRequired = '' -%}
+        {%- if attr['ng-required'] is defined -%}
+            {%- set ngRequired = attr['ng-required'] ~ ' && ' -%}
+        {%- endif -%}
+        {%- set ngRequired = ngRequired ~ id -%}
+        {%- set attr = attr|merge({'ng-required': ngRequired|default('')}) -%}
+        <div class="input-group" ng-show="{{id}}">
+            <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} />
+        </div>
+        <h5 ng-show="!{{id}}">Isento</h5>
+        <formerro form="{{rootFormName}}Form['{{full_name}}']" class="erro-formulario-mensagem"></formerro>
+    </div>
+{%- endblock emissao_conhecimento_ie_row %}
+
+{# Widgets #}
+
+{%- block textarea_widget -%}
+    {%- if ngModel is defined and ngModel != false -%}
+        {%- set attr = attr|merge({'ng-model': ngModel|default('')}) -%}
+    {%- endif -%}
+    {{- parent() -}}
+{%- endblock textarea_widget -%}
+
+{% block form_widget_simple -%}
+    {%- if ngModel is defined and ngModel != false -%}
+        {%- set attr = attr|merge({'ng-model': ngModel|default('')}) -%}
+    {%- endif -%}
+    {{- parent() -}}
+{%- endblock form_widget_simple %}
+
+{% block choice_widget_collapsed-%}
+    {# Adiciona o atributo ng-model aos atributos padrões #}
+    {% set attr = attr|merge({'ng-model': ngModel|default('')}) %}
+
+    {# Se o value e ngModel estão definidos, adiciona a diretiva ng-init #}
+    {% if value is not empty and ngModel is defined %}
+
+
+    {% endif %}
+    {# Fix Bug. Seta placeholder (valor padrão) para nullo. Evita imprimir uma tag <option> vazia #}
+    {% set placeholder = placeholder is empty ? null : placeholder %}
+    {{- parent() -}}
+{%- endblock choice_widget_collapsed %}
+
+{% block choice_widget_expanded -%}
+
+    {%- set attr = attr|merge({'ng-model': ngModel}) %}
+    {%- set rootFormName = getRootFormName(form) -%}
+    {%- if '-inline' in label_attr.class|default('') %}
+        <div class="control-group">
+            {%- for child in form %}
+                {{ form_widget(child, {
+                    parent_label_class: label_attr.class|default(''),
+                }) }}
+            {%- endfor %}
+        </div>
+    {%- else %}
+        <div>
+            {%- for child in form %}
+                {%- set classeAgrupamento = attr.classeAgrupamento is defined ? attr.classeAgrupamento : 'col-md-3' %}
+                <div class="{{classeAgrupamento}}">
+                    {{ form_widget(child, {
+                        parent_label_class: label_attr.class|default(''),
+                        attr: attr
+                    }) }}
+                </div>
+            {%- endfor %}
+            {%- if attr['multiplo-checkbox'] is defined %}
+                <div class="col-md-12">
+                    <formerro form-group="{{full_name}}" class="erro-formulario-mensagem"></formerro>
+                </div>
+            {%- endif %}
+        </div>
+    {%- endif %}
+{%- endblock choice_widget_expanded %}
+
+{% block datetime_widget -%}
+    {% if widget == 'single_text' %}
+        {{- parent() -}}
+    {% else %}
+        {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-inline')|trim}) %}
+        <div {{ block('widget_container_attributes') }}>
+            {{ form_errors(form.date) }}
+            {{ form_errors(form.time) }}
+            {{ form_widget(form.date, { datetime: true } ) }}&nbsp;
+            {{ form_widget(form.time, { datetime: true } ) }}
+        </div>
+    {% endif %}
+{%- endblock datetime_widget %}
+
+{% block date_widget -%}
+    {% set attr = attr|merge({'ng-model': ngModel|default('')}) %}
+    {% if widget == 'single_text' %}
+        {% set type = 'text' %}
+        {{- parent() -}}
+    {% else %}
+        {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-inline')|trim}) %}
+        {% if datetime is not defined or not datetime %}
+            <div {{ block('widget_container_attributes') -}}>
+        {% endif %}
+            {{ date_pattern|replace({
+                '{{ year }}': form_widget(form.year),
+                '{{ month }}': form_widget(form.month),
+                '{{ day }}': form_widget(form.day),
+            })|raw }}
+        {% if datetime is not defined or not datetime %}
+            </div>
+        {% endif %}
+    {% endif %}
+{%- endblock date_widget %}
+
+{# bloco para renderizar o campo typeahead #}
+{% block typeahead_widget -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
+    <div class="input-group">
+      <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} typeahead-min-length="4" typeahead-wait-ms="900" typeahead-loading="typeaheadLoading['{{id}}']" ng-init="typeaheadLoading['{{id}}']=false" />
+      <span class="input-group-addon"><i class="fa fa-search" ng-class="{'fa-refresh fa-spin': typeaheadLoading['{{id}}']}"></i></span>
+    </div>
+{%- endblock typeahead_widget %}
+
+{# bloco para renderizar o campo buscacliente #}
+{% block buscacliente_widget -%}
+
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
+    <buscar-clientes-typeahead model="{{model}}" typeahead-model="{{ngModel}}" typeahead-id="{{id}}" {% if callback is not empty %}callback="{{ callback }}" {% endif %}>
+        <div ng-show="!typeaheadCliente['{{id}}']['selecionado']">
+            <div class="input-group">
+                <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} typeahead-min-length="4" typeahead-wait-ms="900" placeholder="Digite a razão social, CNPJ ou CPF do cliente" typeahead="cliente.label for cliente in buscarClientesTypeahead.buscaClientes($viewValue)" typeahead-on-select="selecionaClienteTypeahead($item, '{{id}}')" typeahead-loading="typeaheadCliente['{{id}}']['loading']" autocomplete="off" />
+                <span class="input-group-addon" ng-class="{'btn-primary': typeaheadCliente['{{id}}']['loading']}">
+                    <i class="fa fa-search" ng-class="{'fa-refresh fa-spin': typeaheadCliente['{{id}}']['loading']}"></i>&nbsp;|&nbsp;
+                    <a href="#" ng-click="cadastraClienteTypeahead('{{id}}', $event)" data-toggle="tooltip" data-placement="top" title="Cadastrar cliente">
+                        <i class="fa fa-floppy-o"></i>
+                    </a>
+                </span>
+            </div>
+        </div>
+        <div ng-show="typeaheadCliente['{{id}}']['selecionado']">
+            <div class="alert-clientes-typeahead alert alert-info" role="alert">
+                <button type="button" class="close" aria-label="Remover" ng-click="removeClienteTypeahead('{{id}}')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <span ng-bind="typeaheadCliente['{{id}}']['selecionado'].label"></span>
+            </div>
+        </div>
+    </buscar-clientes-typeahead>
+    {%- if campoErro is not null -%}
+    {# Pega o nome do formulário root #}
+    {%- set rootFormName = getRootFormName(form) -%}
+    <input ng-model="{{model}}" name="{{campoErro}}" type="hidden"/>
+    <formerro form="{{rootFormName}}Form['{{campoErro}}']" class="erro-formulario-mensagem"></formerro>
+    {%- endif -%}
+{%- endblock buscacliente_widget %}
+
+{# bloco para renderizar o campo texticon #}
+{% block texticon_widget -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
+    {%- set icone_attr = icone_attr|merge({class: (icone_attr.class|default('') ~ ' input-group-addon')|trim}) -%}
+    <div class="input-group">
+      <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} />
+      <span {{ block('imprimir_atributos_text_icon') }}><i class="fa {{icone}}"></i></span>
+    </div>
+{%- endblock texticon_widget %}
+
+{# bloco para renderizar o campo texticon #}
+{% block entityicon_widget -%}
+    {{block('choiceicon_widget')}}
+{%- endblock entityicon_widget %}
+
+{% block choiceicon_widget -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
+    {%- set icone_attr = icone_attr|merge({class: (icone_attr.class|default('') ~ ' input-group-addon')|trim}) -%}
+    <div class="input-group">
+      {{ block('choice_widget') }}
+      <span {{ block('imprimir_atributos_text_icon') }}><i class="fa {{icone}}"></i></span>
+    </div>
+{%- endblock choiceicon_widget %}
+
+{%- block imprimir_atributos_text_icon -%}
+    {%- for attrname, attrvalue in icone_attr -%}
+        {{- " " -}}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ attrvalue|trans({}, translation_domain) }}"
+        {%- elseif attrvalue is sameas(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not sameas(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{%- endblock imprimir_atributos_text_icon -%}

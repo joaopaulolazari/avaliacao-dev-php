@@ -1,0 +1,59 @@
+AppBundle\Entity\TMaterial:
+    type: entity
+    table: t_material
+    inheritanceType: JOINED
+    discriminatorColumn:
+        name: fs_tipo_material
+        type: string
+        length: 255
+    discriminatorMap:
+        livro: TMaterialLivro
+        dicionario: TMaterialDicionario
+    id:
+        fnMaterialId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                comment: 'Id autoincrement'
+            id: true
+            column: fn_material_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        fsTitulo:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                comment: 'Título do material'
+            column: fs_titulo
+        fsSubtitulo:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+                comment: 'Subtítulo do material'
+            column: fs_subtitulo
+        fsCaminhoImagem:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+                comment: 'Caminho da imagem do material'
+            column: fs_caminho_imagem
+    manyToMany:
+        autores:
+            targetEntity: TAutor
+            joinTable:
+                name: t_material_autor
+                joinColumns:
+                    fn_material_id:
+                        referencedColumnName: fn_material_id
+                inverseJoinColumns:
+                    fn_autor_id:
+                        referencedColumnName: fn_autor_id
+    lifecycleCallbacks: {  }

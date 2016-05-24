@@ -1,0 +1,27 @@
+fos_rest:
+    exception:
+        enabled: true
+        exception_controller: 'API\AppBundle\Controller\ExceptionController::showAction'
+    view:
+        view_response_listener: 'force'
+        formats:
+            xml: true
+            json: true
+        templating_formats:
+            html: true
+        force_redirects:
+            html: true
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig
+    routing_loader:
+        default_format: json
+
+# Configuração para JMS Serializer adotar estratégia de camelCase
+parameters:
+    jms_serializer.camel_case_naming_strategy.class: JMS\Serializer\Naming\IdenticalPropertyNamingStrategy
+
+jms_serializer:
+    handlers:
+        datetime:
+            default_format: "d/m/Y H:i"
+            default_timezone: "UTC" # deaults to whatever timezone set in php.ini or via date_default

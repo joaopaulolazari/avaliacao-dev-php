@@ -1,0 +1,23 @@
+AppBundle\Entity\TAutor:
+    properties:
+        fnAutorId:
+            groups:
+                - form
+                - listagem
+                - detalhado
+        fsNome:
+            groups:
+                - form
+                - listagem
+                - detalhado
+        fsNotacaoAutor:
+            groups:
+                - form
+                - listagem
+                - detalhado
+        fdInclusao:
+            groups:
+                - detalhado
+        fdAlteracao:
+            groups:
+                - detalhado

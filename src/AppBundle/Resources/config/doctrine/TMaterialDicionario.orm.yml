@@ -1,0 +1,21 @@
+AppBundle\Entity\TMaterialDicionario:
+    type: entity
+    table: t_material_dicionario
+    id: {  }
+    repositoryClass: AppBundle\Entity\Repository\TMaterialDicionarioRepository
+    fields:
+        fsEdicao:
+            type: string
+            nullable: false
+            length: 45
+            options:
+                fixed: false
+            column: fs_edicao
+        fsClassificacao:
+            type: string
+            nullable: true
+            length: 45
+            options:
+                fixed: false
+            column: fs_classificacao
+    lifecycleCallbacks: {  }

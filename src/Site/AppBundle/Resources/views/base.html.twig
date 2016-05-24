@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html ng-app="siteApp" lang="pt-br">
+    <head>
+
+        <title>{% block title %}Teste praxis{% endblock %}</title>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Teste praxis">
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('estaticos/bootstrap/dist/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('estaticos/font-awesome/css/font-awesome.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('estaticos/alertifyjs/src/css/core.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('estaticos/alertifyjs/src/css/themes/bootstrap3/bootstrap.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('estaticos/angular-loading-bar/src/loading-bar.css') }}" />
+
+        <style type="text/css">
+            body {
+              min-height: 2000px;
+              padding-top: 70px;
+            }
+
+            label.required:after {
+                content: " *";
+            }
+
+            /**
+             * Imagem de upload upload
+             */
+            .upload-imagem {
+                border: 1px solid #CCC;
+                width: 152px;
+                padding: 2px;
+                height: 151px;
+            }
+            .upload-imagem .img-alterando,
+            .upload-imagem .img-alterado {
+                display: none;
+            }
+            .upload-imagem .legenda {
+                position: relative;
+                top: -21px;
+                background: #000;
+                text-align: center;
+                opacity: 0.6;
+            }
+            .upload-imagem .legenda input[type="file"] {
+                position: absolute;
+                top: 1px;
+                cursor: pointer;
+                opacity: 0;
+                width: 145px;
+            }
+            .upload-imagem .legenda a {
+                text-decoration: none;
+                color: #FFF;
+            }
+            .upload-imagem .legenda a:hover {
+                text-decoration: underline;
+            }
+            .upload-imagem .alterada {
+                display: none;
+                position: absolute;
+                width: 146px;
+                background: #FF6418;
+                color: #FFF;
+                text-align: center;
+                bottom: 3px;
+            }
+        </style>
+
+        {% block stylesheets %}{% endblock %}
+
+    </head>
+    <body>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ path('site_material') }}">Teste praxis</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="{{ path('site_material') }}">Materiais</a></li>
+            <li><a href="{{ path('site_autor') }}">Autores</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+        <!-- conteúdo -->
+        <div class="container" id="main">
+            <div class="jumbotron">
+            {% block body %}{% endblock %}
+            </div>
+        </div>
+        <!-- fim conteúdo -->
+
+        {% include 'SiteAppBundle::variaveis-globais.js.twig' %}
+
+        <script type="text/javascript" src="{{ asset('estaticos/jquery/dist/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('estaticos/jqueryui/jquery-ui.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('estaticos/alertifyjs/src/js/alertify.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('estaticos/angularjs/angular.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('estaticos/angular-ui-utils/ui-utils.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('estaticos/angular-bootstrap/ui-bootstrap-tpls.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('estaticos/angular-i18n/angular-locale_pt-br.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('js/site/funcoes-globais.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('estaticos/jquery.maskedinput/dist/jquery.maskedinput.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('estaticos/moment/min/moment.min.js') }}"></script>
+
+        <!-- Bootstrap core JavaScript -->
+        <script src="{{ asset('estaticos/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+        <!-- Angular app Script -->
+        <script type="text/javascript" src="{{ asset('js/site/angular/app/factories.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/site/angular/app/directives.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/site/angular/app/filters.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/site/angular/app/services.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/site/angular/app/app.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/site/angular/app/templates.js') }}"></script>
+
+        <script src="{{ asset('estaticos/angular-input-masks/angular-input-masks.br.min.js') }}"></script>
+
+        {% block javascripts %}{% endblock %}
+
+    </body>
+</html>

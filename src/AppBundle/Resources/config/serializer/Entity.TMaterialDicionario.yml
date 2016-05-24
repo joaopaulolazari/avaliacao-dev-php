@@ -1,0 +1,20 @@
+AppBundle\Entity\TMaterialDicionario:
+    properties:
+        fnMaterialId:
+            groups:
+                - form
+                - detalhado
+        fsEdicao:
+            groups:
+                - form
+                - detalhado
+        fsClassificacao:
+            groups:
+                - form
+                - detalhado
+    virtual_properties:
+        getFsTipoMaterial:
+            serialized_name: fsTipoMaterial
+            groups:
+                - listagem
+            type: string

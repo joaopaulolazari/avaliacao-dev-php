@@ -1,0 +1,42 @@
+#!/usr/bin/php
+<?php
+// Hook configuration
+$project = 'WebMCL';
+$projectPath = dirname(dirname(dirname(__FILE__)));
+
+echo PHP_EOL;
+echo '+ Executando Testes e Unitários PHP'.PHP_EOL;
+
+exec('./bin/phpunit -c app --testsuite unitarios --exclude-group funcional', $output, $returnCode);
+
+$erros =  $output;
+// if the build failed, output a summary and fail
+if ($returnCode !== 0)
+{
+    // find the line with the summary; this might not be the last
+    while (($minimalTestSummary = array_pop($output)) !== null)
+    {
+        if (strpos($minimalTestSummary, 'Tests:') !== false)
+        {
+            break;
+        }
+    }
+
+    foreach ($erros as $k => $val) {
+        if ($k > 2) {
+            echo $val.PHP_EOL;
+        }
+    }
+
+    // output the status and abort the commit
+    echo '+ Testes PHP para '.$project.' falharam'.PHP_EOL;
+    //echo $minimalTestSummary;
+    echo chr(27).'[0m'.PHP_EOL; // disable colors and add a line break
+    echo PHP_EOL;
+    exit(1);
+}
+
+echo '+ Todos os testes PHP do '.$project.' estão OK.'.PHP_EOL;
+echo PHP_EOL;
+
+exit(0);

@@ -1,0 +1,18 @@
+security:
+    providers:
+        in_memory:
+          memory:
+            users: ~
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt|error)|css|images|js|img)/
+            anonymous: ~
+            http_basic: ~
+
+
+    access_control:
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+    # acl:
+        # connection: default

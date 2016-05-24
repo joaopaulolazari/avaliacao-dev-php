@@ -1,0 +1,26 @@
+#!/bin/sh
+
+PHPCS_IGNORE='FeatureContext.php,AppKernel.php'
+PHPFILES=`git diff --cached --name-only --diff-filter=ACMR HEAD | grep .php`
+
+# executa CodeSniffer
+if [ "$PHPCS_IGNORE" != "" ]; then
+    IGNORE="--ignore=$PHPCS_IGNORE"
+else
+    IGNORE=""
+fi
+
+# verifica CodeSniffer PHP
+if [ "$PHPFILES" != "" ]
+then
+    # verifica arquivos PHP
+    echo "Executando Code Sniffer..."
+    ./bin/phpcs --warning-severity=0 --standard=PSR2 $IGNORE --encoding=utf-8 -p $PHPFILES
+    if [ $? != 0 ]
+    then
+        echo "Corrija os erros antes de enviar os arquivos para o servidor."
+        exit 1
+    fi
+fi
+
+exit 0

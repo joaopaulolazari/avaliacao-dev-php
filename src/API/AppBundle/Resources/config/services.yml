@@ -1,0 +1,41 @@
+services:
+    api.app.servico_base:
+        abstract: true
+        calls:
+            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
+            - [setFormFactory, ["@form.factory"]]
+            - [setSecurityContext, ["@security.context"]]
+    api.app.serializer.handler.type:
+        class: AppBundle\Serializer\Handler\TypeHandler
+        tags:
+            - { name: jms_serializer.subscribing_handler }
+    api.app.form.extension.filtro:
+        class: AppBundle\Form\Extension\FormTypeFiltroExtension
+        tags:
+            - { name: form.type_extension, alias: form }
+    api.app.serializador:
+        class: API\AppBundle\Service\SerializadorService
+        arguments: ["@doctrine.orm.entity_manager", "@jms_serializer"]
+    api.app.autor:
+        class: API\AppBundle\Service\AutorService
+        parent: api.app.servico_base
+        calls:
+            - [setRepository, [AppBundle:TAutor]]
+    api.app.material.material_livro:
+        class: API\AppBundle\Service\Material\MaterialLivroService
+        parent: api.app.servico_base
+        calls:
+            - [setRepository, [AppBundle:TMaterialLivro]]
+    api.app.material.material_dicionario:
+        class: API\AppBundle\Service\Material\MaterialDicionarioService
+        parent: api.app.servico_base
+        calls:
+            - [setRepository, [AppBundle:TMaterialDicionario]]
+    api.app.material.material:
+        class: API\AppBundle\Service\Material\MaterialService
+        parent: api.app.servico_base
+        calls:
+            - [setRepository, [AppBundle:TMaterial]]
+    api.app.app:
+        class: API\AppBundle\Service\AppService
+        arguments: ["%kernel.root_dir%", "@form.factory"]
